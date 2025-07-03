@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use("/", contactRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = parseInt(process.env.PORT || "8080", 10);
 app.listen(PORT, () => {
   console.log(`Server is running successfully on port ${PORT}`);
 });
