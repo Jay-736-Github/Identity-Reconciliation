@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id              Int       @id @default(autoincrement())
+  phoneNumber     String?
+  email           String?
+  linkedId        Int?
+  linkPrecedence  String    @default("primary")
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+// New Row Added here
+  orders          Order[]
+}
+
+// Added this entire new model 
+model Order {
+  id             Int      @id @default(autoincrement())
+  productName    String
+  orderValue     Float
+  createdAt      DateTime @default(now())
+
+  // The foreign key that is used to link an Order to a Contact
+  contactId      Int
+  contact        Contact  @relation(fields: [contactId], references: [id])
+}
